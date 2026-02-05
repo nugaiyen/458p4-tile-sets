@@ -79,15 +79,15 @@
             
         let map = new mapboxgl.Map({
             container: 'map',
-            zoom: 9,
-            center: [-122.2559435, 47.6002614],
+            zoom: 11,
+            center: [-122.3059435, 47.6002614],
             style: {
                 version: 8,
                 sources: {
                     'uw-tiles': {
                         type: 'raster',
                         tiles: [
-                            'assets/tile-sets-1/{z}/{x}/{y}.png'
+                            'assets/458metatilesbro/{z}/{x}/{y}.png'
                         ],
                         tileSize: 256,
                         attribution: 'Map tiles designed by Bo Zhao'
@@ -108,7 +108,7 @@
             map.addSource('road-tiles', {
                 'type': 'raster',
                 'tiles': [
-                    'assets/tile-sets-2/{z}/{x}/{y}.png'
+                    'assets/458metatilesSHPPP/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Bo Zhao'
