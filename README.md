@@ -16,10 +16,13 @@ This set beings attentions to where the roads are!
 ![text](https://github.com/nugaiyen/458p4-tile-sets/blob/a59e67be5e550376556a091d4cffdcb4e713f0fd/imgs/tile-sets-1.png)
 
 ### Thematic parking shapefile set
+![text](https://github.com/nugaiyen/458p4-tile-sets/blob/23fce41b0f4838b3c3d4a011661683a73a143c1b/imgs/tile-sets-2.png)
 
 ### Combination of both the thematic parking shapefile and the road markings on the basemap
+![tex](
 
 ### Thematic parking shapefile on basemap
+![tex](
 
 
 
