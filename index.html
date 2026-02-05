@@ -84,7 +84,7 @@
             style: {
                 version: 8,
                 sources: {
-                    'uw-tiles': {
+                    'bg-tiles': {
                         type: 'raster',
                         tiles: [
                             'assets/background/{z}/{x}/{y}.png'
@@ -95,9 +95,9 @@
                 },
                 layers: [
                     {
-                        id: 'uw-tiles-layer',
+                        id: 'bg-tiles-layer',
                         type: 'raster',
-                        source: 'uw-tiles'
+                        source: 'bg-tiles'
                     }
                 ]
             }
@@ -108,7 +108,7 @@
             map.addSource('road-tiles', {
                 'type': 'raster',
                 'tiles': [
-                    'assets/458metatilesSHPPP/{z}/{x}/{y}.png'
+                    'assets/tile-sets-1/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Bo Zhao'
@@ -116,7 +116,7 @@
 
 
             map.addLayer({
-                'id': 'roads',
+                'id': 'Roads',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
@@ -126,7 +126,26 @@
 
 
 
-            map.addSource('park-tiles', {
+            map.addSource('road-shp', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/tile-sets-2/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Bo Zhao'
+            });
+
+
+            map.addLayer({
+                'id': 'Parking',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'road-shp'
+            });
+
+             map.addSource('shp-and-tiles', {
                 'type': 'raster',
                 'tiles': [
                     'assets/tile-sets-3/{z}/{x}/{y}.png'
@@ -137,34 +156,17 @@
 
 
             map.addLayer({
-                'id': 'national-parks',
+                'id': 'Parking and roads',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'park-tiles'
+                'source': 'shp-and-tiles'
             });
 
 
-            map.addSource('both-tiles', {
-                'type': 'raster',
-                'tiles': [
-                    'assets/tile-sets-4/{z}/{x}/{y}.png'
-                ],
-                'tileSize': 256,
-                'attribution': 'Map tiles designed by Bo Zhao'
-            });
 
-
-            map.addLayer({
-                'id': 'national-parks-and-roads',
-                'type': 'raster',
-                'layout': {
-                    'visibility': 'none'
-                },
-                'source': 'both-tiles'
-            });
-
+           
 
         }); // onlaod
 
@@ -174,12 +176,12 @@
         // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
             // If these two layers were not added to the map, abort
-            if (!map.getLayer('roads') || !map.getLayer('national-parks') ||!map.getLayer('national-parks-and-roads')) {
+            if (!map.getLayer('Roads') || !map.getLayer('Parking') || !map.getLayer('Parking and roads')) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['roads', 'national-parks', 'national-parks-and-roads'];
+            const toggleableLayerIds = ['Roads', 'Parking', 'Parking and roads'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
@@ -236,3 +238,4 @@
 </body>
 
 </html>
+
