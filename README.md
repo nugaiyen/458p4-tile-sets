@@ -13,7 +13,13 @@ The base map set is monochrome, and zoomed in to showcase the Seattle area.
 
 ### Road markings with a basemap set
 This set beings attentions to where the roads are!
-![text]
+![text](https://github.com/nugaiyen/458p4-tile-sets/blob/a59e67be5e550376556a091d4cffdcb4e713f0fd/imgs/tile-sets-1.png)
+
+### Thematic parking shapefile set
+
+### Combination of both the thematic parking shapefile and the road markings on the basemap
+
+### Thematic parking shapefile on basemap
 
 
 
