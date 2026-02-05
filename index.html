@@ -105,6 +105,49 @@
 
         map.on('load', () => {
 
+
+             map.addSource('road-shp', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/tile-sets-2/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Bo Zhao'
+            });
+
+
+            map.addLayer({
+                'id': 'Parking',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'road-shp'
+            });
+
+             map.addSource('shp-and-bg', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/tile-sets-4/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Bo Zhao'
+            });
+
+
+            map.addLayer({
+                'id': 'Parking on map',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'shp-and-bg'
+            });
+
+
+
+
+
             map.addSource('road-tiles', {
                 'type': 'raster',
                 'tiles': [
@@ -126,25 +169,7 @@
 
 
 
-            map.addSource('road-shp', {
-                'type': 'raster',
-                'tiles': [
-                    'assets/tile-sets-2/{z}/{x}/{y}.png'
-                ],
-                'tileSize': 256,
-                'attribution': 'Map tiles designed by Bo Zhao'
-            });
-
-
-            map.addLayer({
-                'id': 'Parking',
-                'type': 'raster',
-                'layout': {
-                    'visibility': 'none'
-                },
-                'source': 'road-shp'
-            });
-
+           
              map.addSource('shp-and-tiles', {
                 'type': 'raster',
                 'tiles': [
@@ -164,7 +189,7 @@
                 'source': 'shp-and-tiles'
             });
 
-
+           
 
            
 
@@ -176,12 +201,12 @@
         // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
             // If these two layers were not added to the map, abort
-            if (!map.getLayer('Roads') || !map.getLayer('Parking') || !map.getLayer('Parking and roads')) {
+            if ( !map.getLayer('Parking') || !map.getLayer('Parking on map') || !map.getLayer('Roads') || !map.getLayer('Parking and roads') ) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['Roads', 'Parking', 'Parking and roads'];
+            const toggleableLayerIds = [ 'Parking' , 'Parking on map', 'Roads','Parking and roads'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
