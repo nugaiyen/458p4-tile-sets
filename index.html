@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
     <title>Map Design</title>
-    <meta name="viewport" content="wdith=device-width, initial-scale=1.0">
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.css" rel="stylesheet">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
 
     <style>
         body {
@@ -46,7 +46,6 @@
             text-align: center;
         }
 
-
         /* the last item of the layer items will not include a seperator */
         #menu a:last-child {
             border: none;
@@ -66,49 +65,174 @@
         #menu a.active:hover {
             background: #3074a4;
         }
-
     </style>
-
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
 </head>
 
-
 <body>
-<div id="map"></div>
-<script>
-    mapboxgl.accessToken = 
-        'pk.eyJ1IjoibnVnYWl5ZW4iLCJhIjoiY21rb29tNzZxMDMzYTNmcHBpYmlkZGJqNSJ9.aa6QqHmav1QDW8cZUNCBhw';
-    const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        center: [-122.2559435, 47.6002614], // starting position [lng, lat]. Note that lat must be set between -90 and 90
-        zoom: 12 // starting zoom
-    });
+    <nav id="menu"></nav>
+    <div id='map'></div>
+    <script type="text/javascript">
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoibnVnYWl5ZW4iLCJhIjoiY21rb29tNzZxMDMzYTNmcHBpYmlkZGJqNSJ9.aa6QqHmav1QDW8cZUNCBhw';
 
-
-
-    map.on('load', () => {
-        map.addSource('uw-tiles', {
-            type: 'raster',
-            tiles: [
-            'assets/tile-sets-1/{z}/{x}/{y}.png'
-            ],
-            tileSize: 256,
-            attribution: 'Map tiles designed by Bo Zhao'
+            
+        let map = new mapboxgl.Map({
+            container: 'map',
+            zoom: 9,
+            center: [-122.2559435, 47.6002614],
+            style: {
+                version: 8,
+                sources: {
+                    'uw-tiles': {
+                        type: 'raster',
+                        tiles: [
+                            'assets/tile-sets-1/{z}/{x}/{y}.png'
+                        ],
+                        tileSize: 256,
+                        attribution: 'Map tiles designed by Bo Zhao'
+                    }
+                },
+                layers: [
+                    {
+                        id: 'uw-tiles-layer',
+                        type: 'raster',
+                        source: 'uw-tiles'
+                    }
+                ]
+            }
         });
 
-        map.addLayer({
-            id: 'uw',
-            type: 'raster',
-            source: 'uw-tiles',
-            layout: {
-            // 'visibility': 'none'
-            // Uncomment the line above to hide this layer on initial load.
-            // This is useful when you add multiple tile layers.
+        map.on('load', () => {
+
+            map.addSource('road-tiles', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/tile-sets-2/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Bo Zhao'
+            });
+
+
+            map.addLayer({
+                'id': 'roads',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'road-tiles'
+            });
+
+
+
+            map.addSource('park-tiles', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/tile-sets-3/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Bo Zhao'
+            });
+
+
+            map.addLayer({
+                'id': 'national-parks',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'park-tiles'
+            });
+
+
+            map.addSource('both-tiles', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/tile-sets-4/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Bo Zhao'
+            });
+
+
+            map.addLayer({
+                'id': 'national-parks-and-roads',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'both-tiles'
+            });
+
+
+        }); // onlaod
+
+    
+
+
+        // After the last frame rendered before the map enters an "idle" state.
+        map.on('idle', () => {
+            // If these two layers were not added to the map, abort
+            if (!map.getLayer('roads') || !map.getLayer('national-parks') ||!map.getLayer('national-parks-and-roads')) {
+                return;
             }
-        }); // add layer 
-    }); // map on load
 
+            // Enumerate ids of the layers.
+            const toggleableLayerIds = ['roads', 'national-parks', 'national-parks-and-roads'];
 
-</script>
+            // Set up the corresponding toggle button for each layer.
+            for (const id of toggleableLayerIds) {
+                // Skip layers that already have a button set up.
+                if (document.getElementById(id)) {
+                    continue;
+                }
 
+                // Create a link.
+                const link = document.createElement('a');
+                link.id = id;
+                link.href = '#';
+                link.textContent = id;
+                link.className = 'inactive';
+
+                // Show or hide layer when the toggle is clicked.
+                link.onclick = function (e) {
+                    const clickedLayer = this.textContent;
+                    // preventDefault() tells the user agent that if the event does not get explicitly handled, 
+                    // its default action should not be taken as it normally would be.
+                    e.preventDefault();
+                    // The stopPropagation() method prevents further propagation of the current event in the capturing 
+                    // and bubbling phases. It does not, however, prevent any default behaviors from occurring; 
+                    // for instance, clicks on links are still processed. If you want to stop those behaviors, 
+                    // see the preventDefault() method.
+                    e.stopPropagation();
+
+                    const visibility = map.getLayoutProperty(
+                        clickedLayer,
+                        'visibility'
+                    );
+
+                    // Toggle layer visibility by changing the layout object's visibility property.
+                    // if it is currently visible, after the clicking, it will be turned off.
+                    if (visibility === 'visible') {
+                        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                        this.className = '';
+                    } else { //otherise, it will be turned on.
+                        this.className = 'active';
+                        map.setLayoutProperty(
+                            clickedLayer,
+                            'visibility',
+                            'visible'
+                        );
+                    }
+                };
+
+                // in the menu place holder, insert the layer links.
+                const layers = document.getElementById('menu');
+                layers.appendChild(link);
+            }
+        });
+    </script>
 </body>
+
 </html>
