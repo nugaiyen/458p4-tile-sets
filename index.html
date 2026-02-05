@@ -111,7 +111,7 @@
     <div class='map-overlay' id='features'>
         <h2>Parking in the Seattle area!</h2>
             <div id='text-description'>
-            <p> Right now you are looking at the general map of Seattle, click anywhere to activate your map options!
+            <p> Right now you are looking at the general map of Seattle. If not shown, click anywhere to activate your map options!
                 <br> <br>
                 There are four options!
                 <br><br> 
@@ -158,7 +158,6 @@
 
         map.on('load', () => {
 
-
              map.addSource('road-shp', {
                 'type': 'raster',
                 'tiles': [
@@ -167,7 +166,6 @@
                 'tileSize': 256,
                 
             });
-
 
             map.addLayer({
                 'id': 'Parking',
@@ -187,7 +185,6 @@
              
             });
 
-
             map.addLayer({
                 'id': 'Parking on map',
                 'type': 'raster',
@@ -196,10 +193,6 @@
                 },
                 'source': 'shp-and-bg'
             });
-
-
-
-
 
             map.addSource('road-tiles', {
                 'type': 'raster',
@@ -210,7 +203,6 @@
               
             });
 
-
             map.addLayer({
                 'id': 'Roads',
                 'type': 'raster',
@@ -220,9 +212,6 @@
                 'source': 'road-tiles'
             });
 
-
-
-           
              map.addSource('shp-and-tiles', {
                 'type': 'raster',
                 'tiles': [
@@ -231,7 +220,6 @@
                 'tileSize': 256,
       
             });
-
 
             map.addLayer({
                 'id': 'Parking and roads',
