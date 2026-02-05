@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display a map on a webpage</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+
+
+<body>
+<div id="map"></div>
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibnVnYWl5ZW4iLCJhIjoiY21rb29tNzZxMDMzYTNmcHBpYmlkZGJqNSJ9.aa6QqHmav1QDW8cZUNCBhw';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        center: [-74.5, 40], // starting position [lng, lat]. Note that lat must be set between -90 and 90
+        zoom: 9 // starting zoom
+    });
+
+
+    map.on('load', () => {
+        map.addSource('uw-tiles', {
+            type: 'raster',
+            tiles: [
+            'C:\Users\linds\OneDrive\Documents\UW\Winter 2026\geog458\458p4-tile-sets\assets\tile-sets-1\meta-tiles\3_&&_1_2_&&_1_2.png'
+            ],
+            tileSize: 256,
+            attribution: 'Map tiles designed by Bo Zhao'
+        });
+
+        map.addLayer({
+            id: 'uw',
+            type: 'raster',
+            source: 'uw-tiles',
+            layout: {
+            // 'visibility': 'none'
+            // Uncomment the line above to hide this layer on initial load.
+            // This is useful when you add multiple tile layers.
+            }
+        }); // map add layer 
+    }); // on map
+
+
+
+</script>
+
+</body>
+</html>
