@@ -8,6 +8,25 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
 
     <style>
+        h2, h3 {
+        margin: 10px;
+        font-size: 18px;
+        }
+
+        h3 {
+            font-size: 16px;
+        }
+
+        p {
+            margin: 10px;
+        }
+        #features {
+            top: 0;
+            height: 300px;
+            margin-top: 20px;
+            width: 200px;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -65,6 +84,22 @@
         #menu a.active:hover {
             background: #3074a4;
         }
+
+
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgba(0, 0, 0, 0.2);
+            margin-left: 20px;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+        }
+
     </style>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
 </head>
@@ -72,6 +107,24 @@
 <body>
     <nav id="menu"></nav>
     <div id='map'></div>
+
+    <div class='map-overlay' id='features'>
+        <h2>Parking in the Seattle area!</h2>
+            <div id='text-description'>
+            <p> Right now you are looking at the general map of Seattle, click anywhere to activate your map options!
+                <br> <br>
+                There are four options!
+                <br><br> 
+                For any options including the word "Parking", a thematic mapping of the road will appear! 
+                The darker the lines, the more parking spaces there are.
+                <br><br>
+                The data source can be accessed 
+                <a href="https://data-seattlecitygis.opendata.arcgis.com/datasets/258c084aa09a427fbb91197439e16e25_0/explore?location=47.676475%2C-122.336375%2C13" 
+                    target="_blank"> here.
+            </p>
+        </div>
+    </div>
+
     <script type="text/javascript">
         mapboxgl.accessToken =
             'pk.eyJ1IjoibnVnYWl5ZW4iLCJhIjoiY21rb29tNzZxMDMzYTNmcHBpYmlkZGJqNSJ9.aa6QqHmav1QDW8cZUNCBhw';
@@ -90,7 +143,7 @@
                             'assets/background/{z}/{x}/{y}.png'
                         ],
                         tileSize: 256,
-                        attribution: 'Map tiles designed by Bo Zhao'
+                      
                     }
                 },
                 layers: [
@@ -112,7 +165,7 @@
                     'assets/tile-sets-2/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
-                'attribution': 'Map tiles designed by Bo Zhao'
+                
             });
 
 
@@ -131,7 +184,7 @@
                     'assets/tile-sets-4/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
-                'attribution': 'Map tiles designed by Bo Zhao'
+             
             });
 
 
@@ -154,7 +207,7 @@
                     'assets/tile-sets-1/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
-                'attribution': 'Map tiles designed by Bo Zhao'
+              
             });
 
 
@@ -176,7 +229,7 @@
                     'assets/tile-sets-3/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
-                'attribution': 'Map tiles designed by Bo Zhao'
+      
             });
 
 
@@ -189,16 +242,7 @@
                 'source': 'shp-and-tiles'
             });
 
-           
-
-           
-
-        }); // onlaod
-
-    
-
-
-        // After the last frame rendered before the map enters an "idle" state.
+            // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
             // If these two layers were not added to the map, abort
             if ( !map.getLayer('Parking') || !map.getLayer('Parking on map') || !map.getLayer('Roads') || !map.getLayer('Parking and roads') ) {
@@ -259,6 +303,17 @@
                 layers.appendChild(link);
             }
         });
+
+           
+
+           
+
+        }); // onlaod
+
+    
+
+
+        
     </script>
 </body>
 
